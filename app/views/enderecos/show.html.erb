@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Endereco:</strong>
+  <%= @endereco.endereco %>
+</p>
+
+<p>
+  <strong>Complento:</strong>
+  <%= @endereco.complento %>
+</p>
+
+<p>
+  <strong>Numero:</strong>
+  <%= @endereco.numero %>
+</p>
+
+<p>
+  <strong>Cep:</strong>
+  <%= @endereco.cep %>
+</p>
+
+<p>
+  <strong>Cidade:</strong>
+  <%= @endereco.cidade %>
+</p>
+
+<%= link_to 'Edit', edit_endereco_path(@endereco) %> |
+<%= link_to 'Back', enderecos_path %>

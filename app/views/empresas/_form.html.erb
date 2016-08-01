@@ -1,0 +1,118 @@
+<%= form_for(@empresa) do |f| %>
+  <% if @empresa.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@empresa.errors.count, "error") %> prohibited this empresa from being saved:</h2>
+
+      <ul>
+      <% @empresa.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="box-body">
+  <div class="row">
+    <div class="col-lg-6">
+      <%= f.label :nome_empresa %><br>
+      <%= f.text_field :nome_empresa, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="row">
+     <div class="col-lg-6">
+      <%= f.label :cnpj %><br>
+      <%= f.text_field :cnpj, :class => 'form-control' %>
+     </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <%= f.label :nome_responsavel %><br>
+      <%= f.text_field :nome_responsavel, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3">
+      <%= f.label :desc_telefone %><br>
+      <%= f.text_field :desc_telefone, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <%= f.fields_for :endereco do |enderecos| %>
+              <div class="row">
+               <div class="col-lg-10">
+                   <%= enderecos.label :Endereco %><br>
+                   <%= enderecos.text_field :endereco, :class => 'form-control' %>
+                 </div>
+              </div>
+              <div class="row">
+               <div class="col-lg-10">
+                   <%= enderecos.label :Complemento %><br>
+                   <%= enderecos.text_field :complemento, :class => 'form-control' %>
+                 </div>
+              </div>
+              <br>
+           <br>
+           <div class="row mar-bot40">
+             <%=  fields_for :estados do |esta| %>
+                 <div class="col-lg-6">
+                   <%= esta.label :Estado %><br>
+                   <%= esta.select :estado_id, options_from_collection_for_select(Estado.all, 'id', 'nome_estado',@estado), {:include_blank => true}, {:onchange => 'changeState(this)', :class => 'form-control' }%>
+                 </div>
+             <%end%>
+             <%if @cidade %>
+                   <div class="col-lg-6">
+                     <%= enderecos.label :Cidade %>
+                     <%= enderecos.select :cidade_id, options_from_collection_for_select(@cidade, 'id', 'nome_cidade',@cidade_setada),{}, :class => 'form-control'%>
+                   </div>
+             <%else%>
+             <div class="col-lg-6">
+                     <%= enderecos.label :Cidade %><br>
+                     <%= enderecos.select :cidade_id, [], {}, {:class => 'form-control'}%>
+             </div>
+              <%end%>
+            </div>
+        <%end%>
+</div>
+</div><!-- /.box -->
+
+<div class="row mar-bot40">
+ <div class="col-lg-8" >
+    <div class="btn-group">
+      <button type="submit" value="Submit" class="btn btn-primary btn-sm">
+       <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
+      </button>
+      <%= link_to empresas_path, :class => "btn btn-default btn-sm" do %>
+         <span class="glyphicon glyphicon-arrow-left"></span> Voltar
+       <% end %>
+     </div>
+   </div>
+</div>
+</section>
+
+<% end %>
+
+
+<script>
+
+function changeState(state){
+    $.ajax({
+      url: '<%= listarCidade_path %>',
+      data : {id : state.value},
+      success: function(data){
+        $('#empresa_endereco_attributes_cidade_id').empty();
+        $('#empresa_endereco_attributes_cidade_id').html('<option>Carregando...</option>');
+        $('#empresa_endereco_attributes_cidade_id').attr('disabled', 'disabled');
+        var options = "";
+        for (var i in data) {
+          var item = data[i];
+          options += "<option value='"+item.id+"'>"+item.nome+"</option>"
+        };
+
+        $('#empresa_endereco_attributes_cidade_id').html(options);
+        $('#empresa_endereco_attributes_cidade_id').removeAttr('disabled');
+      }
+    })
+  }
+
+</script>

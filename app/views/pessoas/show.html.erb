@@ -1,0 +1,68 @@
+<section class="content-header">
+      <!--Mensagens aqui-->
+    <%if notice%>
+      <div class="alert alert-success" role="alert"><%= notice %></div>
+     <%end%>
+</section>
+
+<!-- Main content -->
+<section class="content">
+ <!-- Small boxes (Stat box) -->
+<div class="box box-primary">
+   <div class="box-header with-border">
+      <h3 class="box-title">Bairro</h3>
+    </div><!-- /.box-header -->
+<form role="form">
+<div class="box-body">
+
+<p>
+  <strong>Nome primeiro:</strong>
+  <%= @pessoa.nome_primeiro %>
+</p>
+
+<p>
+  <strong>Nome sobrenome:</strong>
+  <%= @pessoa.nome_sobrenome %>
+</p>
+
+<p>
+  <strong>CPF:</strong>
+  <%= @pessoa.cpf %>
+</p>
+
+<p>
+  <strong>Endereco:</strong>
+  <%= @pessoa.endereco.endereco  %>
+  <%= @pessoa.endereco.complemento %>
+</p>
+
+<p>
+  <strong>Data nascimento:</strong>
+  <%= @pessoa.data_nascimento %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @pessoa.email %>
+</p>
+
+<p>
+  <strong>Sexo:</strong>
+  <%= @pessoa.sexo %>
+</p>
+
+<p>
+  <strong>Codigo cliente:</strong>
+  <%= @pessoa.codigo_cliente %>
+</p>
+
+
+</div><!-- /.box -->
+</form>
+</div><!-- /.box-body -->
+
+<div class="btn-group">
+<%= link_to pessoas_path, :class => "btn btn-default btn-sm" do %>
+   <span class="glyphicon glyphicon-arrow-left"></span> Voltar
+<% end %>
+</div>

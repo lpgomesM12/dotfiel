@@ -1,0 +1,185 @@
+<%= form_for(@pessoa) do |f| %>
+  <% if @pessoa.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pessoa.errors.count, "error") %> prohibited this pessoa from being saved:</h2>
+
+      <ul>
+      <% @pessoa.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="box-body">
+
+
+<div class="row">
+<div class="col-lg-4" style="padding-right: 2px;">
+  <label>CPF</label>
+   <div class="input-group">
+      <%= f.text_field :cpf, :class => 'form-control' %>
+      <!-- <span class="input-group-btn">
+        <button class="btn btn-success" type="button" onclick="buscaTipoReservaDisponivel();">Verificar</button>
+      </span> -->
+   </div>
+  </div>
+  <!-- <div class="col-lg-6" style="padding-left: 0; padding-right: 0px">
+    <br>
+     <div class="alert alert-info" style="padding: 7px;margin-top:3px" role="alert">
+       Verifique se o cliente já está cadastrando em nossa base de dados.
+     </div>
+   </div> -->
+</div>
+
+<div class="row">
+  <div class="col-lg-5">
+      <%= f.label :nome_primeiro %><br>
+      <%= f.text_field :nome_primeiro, :class => "form-control" %>
+  </div>
+  <div class="col-lg-6">
+    <%= f.label :sobrenome %><br>
+    <%= f.text_field :nome_sobrenome, :class => "form-control" %>
+   </div>
+</div>
+
+ <div class="row">
+    <div class="col-lg-2">
+     <%= f.label :data_nascimento %><br>
+     <%= f.text_field :data_nascimento, :class => "form-control" %>
+    </div>
+    <div class="col-lg-6">
+     <%= f.label :email %><br>
+     <%= f.text_field :email, :class => "form-control" %>
+    </div>
+ </div>
+
+
+ <input type="hidden" name="cliente_id" id="cliente_id">
+
+<div class="row">
+  <div class="col-lg-2">
+    <%= f.label :Sexo %>
+    <%= f.collection_select :sexo, Pessoa::SEXO, :to_s, :humanize,{},{ :class => 'form-control' }%>
+  </div>
+</div>
+
+<%= f.fields_for :endereco do |enderecos| %>
+            <div class="row">
+             <div class="col-lg-10">
+                 <%= enderecos.label :Endereco %><br>
+                 <%= enderecos.text_field :endereco, :class => 'form-control' %>
+               </div>
+            </div>
+            <div class="row">
+             <div class="col-lg-10">
+                 <%= enderecos.label :Complemento %><br>
+                 <%= enderecos.text_field :complemento, :class => 'form-control' %>
+               </div>
+            </div>
+            <br>
+         <br>
+         <div class="row mar-bot40">
+           <%=  fields_for :estados do |esta| %>
+               <div class="col-lg-6">
+                 <%= esta.label :Estado %><br>
+                 <%= esta.select :estado_id, options_from_collection_for_select(Estado.all, 'id', 'nome_estado',@estado), {:include_blank => true}, {:onchange => 'changeState(this)', :class => 'form-control' }%>
+               </div>
+           <%end%>
+           <%if @cidade %>
+                 <div class="col-lg-6">
+                   <%= enderecos.label :Cidade %>
+                   <%= enderecos.select :cidade_id, options_from_collection_for_select(@cidade, 'id', 'nome_cidade',@cidade_setada),{}, :class => 'form-control'%>
+                 </div>
+           <%else%>
+           <div class="col-lg-6">
+                   <%= enderecos.label :Cidade %><br>
+                   <%= enderecos.select :cidade_id, [], {}, {:class => 'form-control'}%>
+           </div>
+            <%end%>
+          </div>
+      <%end%>
+
+</div>
+</div><!-- /.box -->
+
+<div class="row mar-bot40">
+ <div class="col-lg-8" >
+    <div class="btn-group">
+      <button type="submit" value="Submit" class="btn btn-primary btn-sm">
+       <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
+      </button>
+      <%= link_to pessoas_path, :class => "btn btn-default btn-sm" do %>
+         <span class="glyphicon glyphicon-arrow-left"></span> Voltar
+       <% end %>
+     </div>
+   </div>
+</div>
+</section>
+
+<% end %>
+
+<script type="text/javascript">
+
+  $("#pessoa_cpf").blur(function(){
+
+    if($(this).val().length === 11){
+          $.ajax({
+            url: '<%= buscaCliente_path %>',
+            data : {cpf : $("#pessoa_cpf").val()},
+            success: function(data){
+              var sexo = "";
+              var cidade = "";
+              var estado = "";
+              for (var i in data) {
+                var item = data[i];
+
+                $("#pessoa_nome_primeiro").val(item.nome_primeiro);
+                $("#pessoa_nome_sobrenome").val(item.nome_sobrenome);
+                $("#pessoa_data_nascimento").val(item.data_nascimento);
+                $("#pessoa_email").val(item.email);
+                $("#pessoa_endereco_attributes_endereco").val(item.endereco);
+                $("#pessoa_endereco_attributes_complemento").val(item.complemento);
+                $("#cliente_id").val(item.id);
+
+                $('#pessoa_sexo').empty();
+                sexo += "<option value='1'>"+item.sexo+"</option>"
+                $('#pessoa_sexo').html(sexo);
+
+                $('#estados_estado_id').empty();
+                estado += "<option value='1'>"+item.estado+"</option>"
+                $('#estados_estado_id').html(estado);
+
+                $('#pessoa_endereco_attributes_cidade_id').empty();
+                cidade += "<option value='1'>"+item.cidade+"</option>"
+                $('#pessoa_endereco_attributes_cidade_id').html(cidade);
+
+
+              };
+            }
+          })
+    }
+});
+
+
+function changeState(state){
+    $.ajax({
+      url: '<%= listarCidade_path %>',
+      data : {id : state.value},
+      success: function(data){
+        $('#pessoa_endereco_attributes_cidade_id').empty();
+        $('#pessoa_endereco_attributes_cidade_id').html('<option>Carregando...</option>');
+        $('#pessoa_endereco_attributes_cidade_id').attr('disabled', 'disabled');
+        var options = "";
+        for (var i in data) {
+          var item = data[i];
+          options += "<option value='"+item.id+"'>"+item.nome+"</option>"
+        };
+
+        $('#pessoa_endereco_attributes_cidade_id').html(options);
+        $('#pessoa_endereco_attributes_cidade_id').removeAttr('disabled');
+      }
+    })
+  };
+
+</script>

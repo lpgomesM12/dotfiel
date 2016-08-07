@@ -1,0 +1,1 @@
+json.array! @regrapontos, partial: 'regrapontos/regraponto', as: :regraponto

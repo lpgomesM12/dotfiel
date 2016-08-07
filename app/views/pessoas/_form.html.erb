@@ -44,13 +44,13 @@
 </div>
 
  <div class="row">
-    <div class="col-lg-2">
-     <%= f.label :data_nascimento %><br>
-     <%= f.text_field :data_nascimento, :class => "form-control" %>
-    </div>
     <div class="col-lg-6">
      <%= f.label :email %><br>
      <%= f.text_field :email, :class => "form-control" %>
+    </div>
+    <div class="col-lg-5">
+     <label>Senha</label><br>
+      <input type="password" name="senha" id="senha" class="form-control" placeholder="Para gerar senha pelo sistema deixe em branco" >
     </div>
  </div>
 
@@ -61,6 +61,10 @@
   <div class="col-lg-2">
     <%= f.label :Sexo %>
     <%= f.collection_select :sexo, Pessoa::SEXO, :to_s, :humanize,{},{ :class => 'form-control' }%>
+  </div>
+  <div class="col-lg-2">
+   <%= f.label :data_nascimento %><br>
+   <%= f.text_field :data_nascimento, :class => "form-control" %>
   </div>
 </div>
 
@@ -120,6 +124,10 @@
 <% end %>
 
 <script type="text/javascript">
+
+  jQuery(function($){
+    $("#pessoa_data_nascimento").mask("99/99/9999");
+  });
 
   $("#pessoa_cpf").blur(function(){
 

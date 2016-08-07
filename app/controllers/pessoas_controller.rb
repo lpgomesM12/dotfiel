@@ -1,10 +1,8 @@
 class PessoasController < ApplicationController
   before_action :set_pessoa, only: [:show, :edit, :update, :destroy]
 
-
  def busca_cliente
    @pessoa = Pessoa.where(cpf: params[:cpf])
-
    json_pessoa = @pessoa.map { |item| {:id => item.id,
                                          :nome_primeiro => item.nome_primeiro,
                                          :nome_sobrenome =>  item.nome_sobrenome,
@@ -45,23 +43,33 @@ class PessoasController < ApplicationController
   def create
 
     if params[:cliente_id] == ""
-        @pessoa = Pessoa.new(pessoa_params)
-        @password = SecureRandom.random_number(99999999)
-        @pessoa.codigo_cliente = @password
-        @user = User.new
-        @user.email = @pessoa.email
-        @user.password = @password
-        @user.password_confirmation = @password
+
+       @pessoa = Pessoa.new(pessoa_params)
+      if params[:senha] == ""
+         @password = SecureRandom.random_number(99999999)
+       else
+         @password = params[:senha]
+      end
+
+      @user = User.new
+      @user.email = @pessoa.email
+      @user.password = @password
+      @user.password_confirmation = @password
+      if current_user.id == 1
+       @user.empresa_id = current_user.empresa_id
+       @user.role = "ADM"
+      else
+       @user.empresa_id = 1
+       @user.role = "USER"
+      end
 
         respond_to do |format|
           if @pessoa.save
-
             #criando usuário
             @user.pessoa_id = @pessoa.id
             @user.save
             #relacionando usuário com empresa
             Clienteempresa.create(:empresa_id => current_user.empresa_id, :pessoa_id => @pessoa.id)
-
             format.html { redirect_to @pessoa, notice: 'Cadastro realizado com sucesso!.' }
             format.json { render :show, status: :created, location: @pessoa }
           else

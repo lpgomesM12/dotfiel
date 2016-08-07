@@ -1,0 +1,2 @@
+json.extract! pontocliente, :id, :numr_ponto, :valor_gasto, :desc_ponto, :flag_resgatado, :empresa_id, :clienteempresa_id, :regraponto_id, :desc_ponto, :flag_resgatado, :created_at, :updated_at
+json.url pontocliente_url(pontocliente, format: :json)

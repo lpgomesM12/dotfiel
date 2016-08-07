@@ -1,0 +1,53 @@
+<%= form_for(@pontocliente) do |f| %>
+  <% if @pontocliente.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pontocliente.errors.count, "error") %> prohibited this pontocliente from being saved:</h2>
+
+      <ul>
+      <% @pontocliente.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :numr_ponto %><br>
+    <%= f.number_field :numr_ponto %>
+  </div>
+  <div class="field">
+    <%= f.label :valor_gasto %><br>
+    <%= f.text_field :valor_gasto %>
+  </div>
+  <div class="field">
+    <%= f.label :desc_ponto %><br>
+    <%= f.text_field :desc_ponto %>
+  </div>
+  <div class="field">
+    <%= f.label :flag_resgatado %><br>
+    <%= f.check_box :flag_resgatado %>
+  </div>
+  <div class="field">
+    <%= f.label :empresa_id %><br>
+    <%= f.text_field :empresa_id %>
+  </div>
+  <div class="field">
+    <%= f.label :clienteempresa_id %><br>
+    <%= f.text_field :clienteempresa_id %>
+  </div>
+  <div class="field">
+    <%= f.label :regraponto_id %><br>
+    <%= f.text_field :regraponto_id %>
+  </div>
+  <div class="field">
+    <%= f.label :desc_ponto %><br>
+    <%= f.text_field :desc_ponto %>
+  </div>
+  <div class="field">
+    <%= f.label :flag_resgatado %><br>
+    <%= f.check_box :flag_resgatado %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,145 @@
+<section class="content">
+  <div class="box box-primary">
+     <div class="box-header with-border">
+        <h3 class="box-title">Adicionar Pontos</h3>
+      </div><!-- /.box-header -->
+   <form role="form">
+  <div class="box-body">
+
+    <div class="row">
+    <div class="col-md-7">
+
+      <div class="row">
+        <div class="col-lg-12">
+        <div class="input-group">
+          <input type="text" name="identificador" id="identificador" placeholder="Informe o CPF ou código do cliente" class="form-control input-lg">
+          <span class="input-group-btn">
+            <button class="btn btn-success btn-lg" type="button"  onclick="buscaCliente();">Pesquisar</button>
+          </span>
+        </div>
+        <br>
+         <input type="hidden" name="clienteempresa" id="clienteempresa">
+       </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-7">
+          <label>Regra</label>
+          <select class="form-control input-lg">
+            <option value="regra">1 Ponto 1 Real</option>
+         </select>
+        </div>
+        <div class="col-lg-5">
+          <label>Valor Gasto</label>
+          <div class="input-group">
+            <input type="text" name="valor" id="valor" disabled required class="form-control input-lg">
+            <span class="input-group-btn" disabled>
+              <button class="btn btn-success btn-lg" type="button" id="buttonadd"  onclick="add_ponto();">
+                 <span class="glyphicon glyphicon-plus"></span>
+              </button>
+            </span>
+          </div>
+        </div>
+       </div>
+
+     </div>
+    </div>
+
+  <hr>
+
+<div class="row">
+ <div id="Div">
+   <div class="col-lg-4">
+
+     <h4 disabel>Cliente:</h4>
+       <i id="nome_cliente"></i>
+     </div>
+
+    <div class="col-lg-4">
+      <h4 disabel>Código:</h4>
+      <i id="codigo_cliente"></i>
+    </div>
+
+    <div class="col-lg-4">
+      <h4 disabel>Pontos acomulados:</h4>
+        <i id="codigo_acomulado"></i> Pts.
+    </div>
+
+  </div>
+ </div>
+
+
+<br>
+<br>
+<div class="row">
+<div class="col-lg-6">
+  <div id="Msg">
+    <div class="alert alert-success" role="alert">
+      Foi adicionado <i id="ponto_add"></i> pontos para este cliente.
+    </div>
+   </div>
+ </div>
+</div>
+
+
+</div><!-- /.box -->
+</form>
+</div><!-- /.box-body -->
+</section>
+
+<script type="text/javascript">
+
+ // $("#nome_cliente").text("Vanessa Freitas Valadão");
+
+$("#Div").hide("slow");
+$("#Msg").hide("slow");
+
+ function buscaCliente(){
+   $.ajax({
+     url: '<%= buscaClientePonto_path %>',
+     data : {
+       identificador : $("#identificador").val()
+     },
+     success: function(data){
+
+       for (var i in data) {
+         var item = data[i];
+          $("#clienteempresa").val(item.id);
+          $("#nome_cliente").text(item.nome +" "+ item.sobrenome);
+          $("#codigo_cliente").text(item.codigo);
+          $("#codigo_acomulado").text(item.qdtPonto);
+          $('#buttonadd').removeAttr('disabled');
+          $("#Div").show("slow")
+       };
+     }
+   })
+ };
+
+
+ function add_ponto(){
+
+    if($("#valor").val() === ""){
+      alert("O campo valor deve ser informado");
+      return;
+    }
+     $.ajax({
+       url: '<%= addpontocliente_path %>',
+       data : {
+         valor : $("#valor").val(),
+         id : $("#clienteempresa").val()
+       },
+       success: function(data){
+            $("#codigo_acomulado").text(data.qtd);
+            $("#ponto_add").text(data.pontoadd)
+            $("#valor").val("");
+            $("#Msg").show("slow")
+       }
+     })
+
+ };
+
+
+ $(function() {
+  $("#valor").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
+})
+</script>

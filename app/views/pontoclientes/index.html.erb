@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Pontoclientes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Numr ponto</th>
+      <th>Valor gasto</th>
+      <th>Desc ponto</th>
+      <th>Flag resgatado</th>
+      <th>Empresa</th>
+      <th>Clienteempresa</th>
+      <th>Regraponto</th>
+      <th>Desc ponto</th>
+      <th>Flag resgatado</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pontoclientes.each do |pontocliente| %>
+      <tr>
+        <td><%= pontocliente.numr_ponto %></td>
+        <td><%= pontocliente.valor_gasto %></td>
+        <td><%= pontocliente.desc_ponto %></td>
+        <td><%= pontocliente.flag_resgatado %></td>
+        <td><%= pontocliente.empresa %></td>
+        <td><%= pontocliente.clienteempresa %></td>
+        <td><%= pontocliente.regraponto %></td>
+        <td><%= pontocliente.desc_ponto %></td>
+        <td><%= pontocliente.flag_resgatado %></td>
+        <td><%= link_to 'Show', pontocliente %></td>
+        <td><%= link_to 'Edit', edit_pontocliente_path(pontocliente) %></td>
+        <td><%= link_to 'Destroy', pontocliente, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pontocliente', new_pontocliente_path %>

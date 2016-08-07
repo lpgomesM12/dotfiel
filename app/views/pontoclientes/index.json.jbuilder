@@ -1,0 +1,1 @@
+json.array! @pontoclientes, partial: 'pontoclientes/pontocliente', as: :pontocliente

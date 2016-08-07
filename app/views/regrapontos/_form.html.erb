@@ -1,0 +1,21 @@
+<%= form_for(@regraponto) do |f| %>
+  <% if @regraponto.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@regraponto.errors.count, "error") %> prohibited this regraponto from being saved:</h2>
+
+      <ul>
+      <% @regraponto.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nome_regra %><br>
+    <%= f.text_field :nome_regra %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

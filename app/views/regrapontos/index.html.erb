@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Regrapontos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome regra</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @regrapontos.each do |regraponto| %>
+      <tr>
+        <td><%= regraponto.nome_regra %></td>
+        <td><%= link_to 'Show', regraponto %></td>
+        <td><%= link_to 'Edit', edit_regraponto_path(regraponto) %></td>
+        <td><%= link_to 'Destroy', regraponto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Regraponto', new_regraponto_path %>

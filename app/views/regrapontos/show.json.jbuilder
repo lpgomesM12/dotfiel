@@ -1,0 +1,1 @@
+json.partial! "regrapontos/regraponto", regraponto: @regraponto

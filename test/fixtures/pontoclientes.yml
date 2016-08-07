@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  numr_ponto: 1
+  valor_gasto: 9.99
+  desc_ponto: MyString
+  flag_resgatado: false
+  empresa_id: 
+  clienteempresa_id: 
+  regraponto_id: 
+  desc_ponto: MyString
+  flag_resgatado: false
+
+two:
+  numr_ponto: 1
+  valor_gasto: 9.99
+  desc_ponto: MyString
+  flag_resgatado: false
+  empresa_id: 
+  clienteempresa_id: 
+  regraponto_id: 
+  desc_ponto: MyString
+  flag_resgatado: false

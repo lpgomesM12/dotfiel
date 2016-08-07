@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160731203317) do
+ActiveRecord::Schema.define(version: 20160803024149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,12 @@ ActiveRecord::Schema.define(version: 20160731203317) do
 
   add_index "clienteempresas", ["empresa_id"], name: "index_clienteempresas_on_empresa_id", using: :btree
   add_index "clienteempresas", ["pessoa_id"], name: "index_clienteempresas_on_pessoa_id", using: :btree
+
+  create_table "contcodigoclientes", force: :cascade do |t|
+    t.integer  "codigo",     limit: 8
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
 
   create_table "empresas", force: :cascade do |t|
     t.string   "nome_empresa"
@@ -87,6 +93,32 @@ ActiveRecord::Schema.define(version: 20160731203317) do
   add_index "pessoas", ["integer"], name: "index_pessoas_on_integer", using: :btree
   add_index "pessoas", ["user_inclusao"], name: "index_pessoas_on_user_inclusao", using: :btree
 
+  create_table "pontoclientes", force: :cascade do |t|
+    t.integer  "numr_ponto"
+    t.decimal  "valor_gasto"
+    t.string   "desc_ponto"
+    t.boolean  "flag_resgatado"
+    t.integer  "empresa_id"
+    t.integer  "clienteempresa_id"
+    t.integer  "regraponto_id"
+    t.integer  "user_inclusao"
+    t.integer  "integer"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "pontoclientes", ["clienteempresa_id"], name: "index_pontoclientes_on_clienteempresa_id", using: :btree
+  add_index "pontoclientes", ["empresa_id"], name: "index_pontoclientes_on_empresa_id", using: :btree
+  add_index "pontoclientes", ["integer"], name: "index_pontoclientes_on_integer", using: :btree
+  add_index "pontoclientes", ["regraponto_id"], name: "index_pontoclientes_on_regraponto_id", using: :btree
+  add_index "pontoclientes", ["user_inclusao"], name: "index_pontoclientes_on_user_inclusao", using: :btree
+
+  create_table "regrapontos", force: :cascade do |t|
+    t.string   "nome_regra"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -102,6 +134,7 @@ ActiveRecord::Schema.define(version: 20160731203317) do
     t.datetime "updated_at",                          null: false
     t.integer  "empresa_id"
     t.integer  "pessoa_id"
+    t.string   "role"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -115,6 +148,9 @@ ActiveRecord::Schema.define(version: 20160731203317) do
   add_foreign_key "empresas", "enderecos"
   add_foreign_key "enderecos", "cidades"
   add_foreign_key "pessoas", "enderecos"
+  add_foreign_key "pontoclientes", "clienteempresas"
+  add_foreign_key "pontoclientes", "empresas"
+  add_foreign_key "pontoclientes", "regrapontos"
   add_foreign_key "users", "empresas"
   add_foreign_key "users", "pessoas"
 end

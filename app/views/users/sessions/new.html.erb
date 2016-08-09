@@ -1,26 +1,62 @@
-<h2>Log in</h2>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DotGet</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <%= stylesheet_link_tag    "application" %>
+      <%= javascript_include_tag "application" %>
+      <%= csrf_meta_tags %>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+</head>
+<body style="background:#d2d6de none repeat scroll 0 0;">
+  <div class="container">
+  <br><br><br><br><br><br>
+  <div class="row">
+    <div class="col-md-4">
     </div>
-  <% end -%>
+    <div class="col-md-4">
+      <div class="login-logo">
+         <a href="../../index2.html">Dot<b>Get</b></a>
+      </div><!-- /.login-logo -->
+        <div class="panel panel-default">
+          <div class="panel-heading" align="center">
+            <h3 class="panel-title"><b>Login</b></h3>
+          </div>
+          <div class="panel-body">
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+              <div class="row">
+                <div class="col-lg-12">
+                   <%= f.label :email %><br />
+                  <%= f.email_field :email, autofocus: true, :class => 'form-control' %>
+               </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-lg-12">
+                   <%= f.label :Senha %><br />
+                   <%= f.password_field :password, autocomplete: "off", :class => 'form-control' %>
+                </div>
+              </div>
+              <% if devise_mapping.rememberable? -%>
+                <div class="field">
+                  <%= f.check_box :remember_me %>
+                  <%= f.label :Lembrar_me %>
+                </div>
+              <% end -%>
+              <div class="row mar-bot40">
+                <div class="col-lg-12" >
+                     <button type="submit" value="Submit" class="btn btn-primary btn-block btn-lg">
+                      <b>Entrar</b>
+                     </button>
+                    </div>
+                  </div>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
+            <% end %>
+          </div>
+        </div>
+        <%= render "users/shared/links" %>
+      </div>
   </div>
-<% end %>
 
-<%= render "users/shared/links" %>
+</body>
+</html>

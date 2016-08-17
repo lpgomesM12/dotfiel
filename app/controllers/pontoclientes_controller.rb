@@ -3,7 +3,75 @@ class PontoclientesController < ApplicationController
 
 
 
+  def add_ponto
+    @valor = params[:valor]
+    @valorarray = @valor.split(',')
+
+    params[:valor] = params[:valor].gsub('.', '')
+    params[:valor] = params[:valor].gsub(',', '.').to_f
+
+    @cont = 1
+    @r = 0
+    @c = 0
+
+    for i in @valorarray
+       if @cont == 1
+         @r = i
+       end
+       if @cont == 2
+         @c = i
+       end
+       @cont +=1
+    end
+
+    @valorredondo = @r.remove('.').to_i
+    if @c.to_i > 0
+       @valorredondo +=1
+    end
+
+     @pontocliente = Pontocliente.new
+     @pontocliente.numr_ponto = @valorredondo
+     @pontocliente.valor_gasto = params[:valor]
+     @pontocliente.empresa_id = current_user.empresa_id
+     @pontocliente.clienteempresa_id = params[:id]
+     @pontocliente.regraponto_id = 1
+     @pontocliente.user_inclusao = current_user.id
+     @pontocliente.save
+
+      @qdtPonto = Pontocliente.where(clienteempresa_id: params[:id]).sum(:numr_ponto)
+
+     render :json => {:qtd => @qdtPonto, :pontoadd => @pontocliente.numr_ponto}
+
+  end
+
+  def resgata_premio
+      @pontocliente = Pontocliente.new
+      @premio = Premio.find(params[:premio_id])
+
+      @pontocliente.numr_ponto = (-@premio.numr_ponto)
+      @pontocliente.empresa_id = current_user.empresa_id
+      @pontocliente.clienteempresa_id = params[:id]
+      @pontocliente.user_inclusao = current_user.id
+      @pontocliente.flag_resgatado = true
+      @pontocliente.premio_id = params[:premio_id]
+      @pontocliente.save
+
+      @qdtPonto = Pontocliente.where(clienteempresa_id: params[:id]).sum(:numr_ponto)
+
+     render :json => {:qtd => @qdtPonto}
+
+  end
+
+
+  def buscapremio
+    @premios = Premio.search(params[:term])
+  end
+
   def addponto
+
+  end
+
+  def resgatarponto
 
   end
 

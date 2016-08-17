@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :premios
   get 'site/index'
 
   resources :pontoclientes
@@ -14,6 +15,10 @@ Rails.application.routes.draw do
   match '/listarCidade', to: 'cidades#get_cities', via: 'get'
   match '/buscaCliente', to: 'pessoas#busca_cliente', via: 'get'
   get 'addponto', to: 'pontoclientes#addponto', as: 'addponto'
+  get 'resgataponto', to: 'pontoclientes#resgatarponto', as: 'resgatarponto'
   match '/buscaClientePonto', to: 'pontoclientes#busca_cliente', via: 'get'
-  match '/addpontocliente', to: 'regrapontos#add_ponto', via: 'get'
+  match '/addpontocliente', to: 'pontoclientes#add_ponto', via: 'get'
+  get 'buscapremio' => 'pontoclientes#buscapremio'
+  match '/resgatapremio', to: 'pontoclientes#resgata_premio', via: 'get'
+  
 end

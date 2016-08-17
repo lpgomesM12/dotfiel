@@ -27,12 +27,15 @@
           <ul class="sidebar-menu">
             <li class="header">MENU NAVEGAÇÃO</li>
 
+          <%if current_user.role == "ADMINDOTGET"%>
+
             <li>
                <%= link_to  empresas_path do %>
                <i class="fa fa-building-o"></i>
                   <span>Empresas</span>
                   <% end %>
             </li>
+          <%end%>
 
             <li>
                <%= link_to  addponto_path do %>
@@ -40,11 +43,22 @@
                   <span>Pontos</span>
                   <% end %>
             </li>
-
+            <li>
+               <%= link_to  resgatarponto_path do %>
+               <i class="fa fa-trophy"></i>
+                  <span>Resgate Prêmio</span>
+                  <% end %>
+            </li>
             <li>
                <%= link_to  pessoas_path do %>
                <i class="fa fa-users"></i>
                   <span>Clientes</span>
+                  <% end %>
+            </li>
+            <li>
+               <%= link_to  premios_path do %>
+               <i class="fa fa-trophy"></i>
+                  <span>Prêmios</span>
                   <% end %>
             </li>
             <li class="header">USUÁRIO</li>

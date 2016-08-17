@@ -43,7 +43,6 @@ class PessoasController < ApplicationController
   def create
 
     if params[:cliente_id] == ""
-
        @pessoa = Pessoa.new(pessoa_params)
       if params[:senha] == ""
          @password = SecureRandom.random_number(99999999)
@@ -67,7 +66,9 @@ class PessoasController < ApplicationController
           if @pessoa.save
             #criando usuário
             @user.pessoa_id = @pessoa.id
-            @user.save
+            if @user.save
+              Userinfo.send_email(@user,current_user.empresa.nome_empresa).deliver
+            end
             #relacionando usuário com empresa
             Clienteempresa.create(:empresa_id => current_user.empresa_id, :pessoa_id => @pessoa.id)
             format.html { redirect_to @pessoa, notice: 'Cadastro realizado com sucesso!.' }

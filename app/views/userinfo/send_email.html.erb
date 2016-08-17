@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h3>Olá , <%= @user.pessoa.nome_primeiro %></h3>
+    <p>Seja bem-vindo ao Programa de Fidelidade <%=@nome_empresa%>.<br
+       Guarde este e-mail com seus dados de acesso</p><br>
+       <p>Acesse sua conta e veja os prêmios disponíveis para troca.</p>
+       Login: <%= @user.email %><br>
+       Senha: <%= @user.password %>
+  </body>
+</html>

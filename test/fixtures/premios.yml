@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome_premio: MyString
+  numr_ponto: 1
+  desc_premio: MyString
+  empresa_id: 
+
+two:
+  nome_premio: MyString
+  numr_ponto: 1
+  desc_premio: MyString
+  empresa_id: 

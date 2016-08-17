@@ -1,0 +1,57 @@
+<%= form_for(@premio) do |f| %>
+  <% if @premio.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@premio.errors.count, "error") %> prohibited this premio from being saved:</h2>
+
+      <ul>
+      <% @premio.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div class="box-body">
+
+<div class="row">
+  <div class="col-lg-7">
+    <%= f.label :nome_premio %><br>
+    <%= f.text_field :nome_premio, :class=> "form-control" %>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-lg-2">
+  <label>Pontos para resgate</label>
+    <%= f.number_field :numr_ponto, :class=> "form-control" %>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-lg-7">
+    <%= f.label :Descricao %><br>
+    <%= f.text_area :desc_premio, :class=> "form-control" %>
+  </div>
+</div>
+
+<%= f.hidden_field :user_inclusao, :value=>current_user.id%>
+<%= f.hidden_field :empresa_id, :value=> current_user.empresa_id%>
+
+</div>
+</div><!-- /.box -->
+
+<div class="row">
+ <div class="col-lg-8" >
+    <div class="btn-group">
+      <button type="submit" value="Submit" class="btn btn-primary btn-sm">
+       <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
+      </button>
+      <%= link_to premios_path, :class => "btn btn-default btn-sm" do %>
+         <span class="glyphicon glyphicon-arrow-left"></span> Voltar
+       <% end %>
+     </div>
+   </div>
+</div>
+</section>
+
+<% end %>

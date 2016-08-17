@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160803024149) do
+ActiveRecord::Schema.define(version: 20160812165634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,13 +105,32 @@ ActiveRecord::Schema.define(version: 20160803024149) do
     t.integer  "integer"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.integer  "premio_id"
   end
 
   add_index "pontoclientes", ["clienteempresa_id"], name: "index_pontoclientes_on_clienteempresa_id", using: :btree
   add_index "pontoclientes", ["empresa_id"], name: "index_pontoclientes_on_empresa_id", using: :btree
   add_index "pontoclientes", ["integer"], name: "index_pontoclientes_on_integer", using: :btree
+  add_index "pontoclientes", ["premio_id"], name: "index_pontoclientes_on_premio_id", using: :btree
   add_index "pontoclientes", ["regraponto_id"], name: "index_pontoclientes_on_regraponto_id", using: :btree
   add_index "pontoclientes", ["user_inclusao"], name: "index_pontoclientes_on_user_inclusao", using: :btree
+
+  create_table "premios", force: :cascade do |t|
+    t.string   "nome_premio"
+    t.integer  "numr_ponto"
+    t.string   "desc_premio"
+    t.integer  "empresa_id"
+    t.integer  "user_inclusao"
+    t.integer  "integer"
+    t.integer  "user_exclusao"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "premios", ["empresa_id"], name: "index_premios_on_empresa_id", using: :btree
+  add_index "premios", ["integer"], name: "index_premios_on_integer", using: :btree
+  add_index "premios", ["user_exclusao"], name: "index_premios_on_user_exclusao", using: :btree
+  add_index "premios", ["user_inclusao"], name: "index_premios_on_user_inclusao", using: :btree
 
   create_table "regrapontos", force: :cascade do |t|
     t.string   "nome_regra"
@@ -150,7 +169,9 @@ ActiveRecord::Schema.define(version: 20160803024149) do
   add_foreign_key "pessoas", "enderecos"
   add_foreign_key "pontoclientes", "clienteempresas"
   add_foreign_key "pontoclientes", "empresas"
+  add_foreign_key "pontoclientes", "premios"
   add_foreign_key "pontoclientes", "regrapontos"
+  add_foreign_key "premios", "empresas"
   add_foreign_key "users", "empresas"
   add_foreign_key "users", "pessoas"
 end

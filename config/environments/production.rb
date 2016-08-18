@@ -92,8 +92,8 @@ Rails.application.configure do
     :address              => "smtp.gmail.com",
     :port                 => 2525,
     :domain               => 'gmail.com',
-    :user_name            => 'equipedotget@gmail.com',
-    :password             => 'dotgetpro',
+    :user_name            => 'grupolpgomes@gmail.com',
+    :password             => 'modelo12',
     :authentication       => 'plain',
     :enable_starttls_auto => true
   }

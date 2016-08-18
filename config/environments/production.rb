@@ -82,9 +82,9 @@ Rails.application.configure do
     :password => 'dotget12',
     :domain => 'dotget.com.br',
     :address => 'smtp.sendgrid.net',
-    :port => 587,
+    :port => 2525,
     :authentication => :plain,
     :enable_starttls_auto => true
   }
-  
+
 end

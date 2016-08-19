@@ -1,6 +1,8 @@
-<section class="content-header">
-  <div class="row">
-    <div class="col-lg-3 col-xs-6">
+<section class="content">
+ <div class="row">
+  <div class="col-md-6">
+   <div class="row">
+     <div class="col-lg-6 col-xs-12">
       <!-- small box -->
       <div class="small-box bg-green">
         <div class="inner">
@@ -13,7 +15,7 @@
         <!-- <a href="#" class="small-box-footer">Acessar <i class="fa fa-arrow-circle-right"></i></a> -->
       </div>
     </div><!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
+    <div class="col-lg-6 col-xs-12">
       <!-- small box -->
       <div class="small-box bg-aqua">
         <div class="inner">
@@ -26,5 +28,59 @@
         <!-- <a href="#" class="small-box-footer">Acessar <i class="fa fa-arrow-circle-right"></i></a> -->
       </div>
     </div><!-- ./col -->
+   </div>
   </div>
+
+<div class="col-md-2">
+</div>
+  <div class="col-md-4">
+    <div class="row">
+     <div class="box box-warning">
+    <div class="box-header with-border">
+      <h3 class="box-title">Ultimas movimentações</h3>
+      <div class="box-tools pull-right">
+        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      </div>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+      <ul class="products-list product-list-in-box">
+
+      <% @pontosclientes.each do |pontocliente| %>
+        <% if pontocliente.flag_resgatado%>
+          <li class="item">
+             <div class="product-img">
+              <img src="/assets/default50x50.png" alt="Product Image">
+             </div>
+             <div class="product-info">
+              <a  class="product-title">Pontos resgatados <span style="font-size:14px" class="label label-danger pull-right"><%=pontocliente.numr_ponto%> Pts</span></a>
+              <span class="product-description">
+                <i><%=pontocliente.clienteempresa.pessoa.nome_primeiro%> <%=pontocliente.clienteempresa.pessoa.nome_sobrenome%></i>
+              </span>
+             </div>
+           </li><!-- /.item -->
+           <%else%>
+           <li class="item">
+             <div class="product-img">
+              <img src="/assets/default50x50.png" alt="Product Image">
+             </div>
+             <div class="product-info">
+               <a class="product-title">Pontos adicionados <span style="font-size:14px" class="label label-success pull-right"><%=pontocliente.numr_ponto%> Pts</span></a>
+               <span class="product-description">
+                 <i><%=pontocliente.clienteempresa.pessoa.nome_primeiro%> <%=pontocliente.clienteempresa.pessoa.nome_sobrenome%></i>
+               </span>
+             </div>
+            </li><!-- /.item -->
+          <%end%>
+        <%end%>
+      </ul>
+    </div><!-- /.box-body -->
+    <div class="box-footer text-center">
+      <!-- <a href="javascript::;" class="uppercase">View All Products</a> -->
+    </div><!-- /.box-footer -->
+   </div><!-- /.box -->
+  </div>
+ </div>
+</div>
+
 </section>

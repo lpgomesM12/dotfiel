@@ -56,11 +56,13 @@ class PessoasController < ApplicationController
       @user.password_confirmation = @password
       if current_user.id == 1
        @user.empresa_id = current_user.empresa_id
-       @user.role = "ADM"
+       #@user.role = "ADMIN"
       else
        @user.empresa_id = 1
-       @user.role = "USER"
+       #@user.role = "USER"
       end
+
+       @user.role = "USER"
 
         respond_to do |format|
           if @pessoa.save

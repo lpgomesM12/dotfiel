@@ -1,3 +1,5 @@
-<section class="content">
- <%= render 'visaogeral' %>
+<section class="content">]
+    <%unless current_user.role = "USER")%>
+       <%= render 'visaogeral' %>
+     <%end%>
 </div>

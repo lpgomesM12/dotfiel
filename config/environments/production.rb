@@ -77,23 +77,13 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # ActionMailer::Base.smtp_settings = {
-  #   :user_name => 'dotget',
-  #   :password => 'dotget12',
-  #   :domain => 'dotget.com.br',
-  #   :address => 'smtp.sendgrid.net',
-  #   :port => 2525,
-  #   :authentication => :plain,
-  #   :enable_starttls_auto => true
-  # }
-
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :address              => "smtp.gmail.com",
-    :port                 => 2525,
+    :port                 => 587,
     :domain               => 'gmail.com',
-    :user_name            => 'grupolpgomes@gmail.com',
-    :password             => 'modelo12',
+    :user_name            => ENV['email_username'],
+    :password             => ENV['email_password'],
     :authentication       => 'plain',
     :enable_starttls_auto => true
   }

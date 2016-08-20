@@ -1,0 +1,23 @@
+<% @clienteempresas.each do |clienteempresa| %>
+  <div class="panel panel-default">
+    <div class="panel-body">
+    <li class="media">
+      <ul class="media-list">
+      <div class="media-left">
+        <a href="#">
+          <img class="media-object" src="" alt="">
+        </a>
+      </div>
+      <%
+         @qdtPonto = Pontocliente.where(clienteempresa_id: clienteempresa).sum(:numr_ponto)
+      %>
+      <span style="font-size:20px" class="label label-danger pull-right"><%=@qdtPonto%> Pts</span>
+      <div class="media-body">
+        <h2 class="media-heading"><%=clienteempresa.empresa.nome_empresa%></h2>
+        
+       </div>
+      </li>
+    </ul>
+    </div>
+  </div>
+<%end%>

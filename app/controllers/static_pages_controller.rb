@@ -7,6 +7,8 @@ class StaticPagesController < ApplicationController
 
       @pontosclientes = Pontocliente.where(empresa_id: current_user.empresa_id)
 
+      @clienteempresas = Clienteempresa.where(pessoa_id: current_user.empresa_id)
+
     end
   end
 end

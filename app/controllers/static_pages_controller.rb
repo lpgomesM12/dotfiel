@@ -5,9 +5,9 @@ class StaticPagesController < ApplicationController
       @clientes =  Clienteempresa.where(empresa_id: current_user.empresa_id).count
       @premios = Premio.where(empresa_id: current_user.empresa_id).count
 
-      @pontosclientes = Pontocliente.where(empresa_id: current_user.empresa_id)
+      @pontosclientes = Pontocliente.where(empresa_id: current_user.empresa_id).page(1).per(4)
 
-      @clienteempresas = Clienteempresa.where(pessoa_id: current_user.empresa_id).page(1).per(4)
+      @clienteempresas = Clienteempresa.where(pessoa_id: current_user.empresa_id))
 
     end
   end

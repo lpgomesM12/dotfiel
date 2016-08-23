@@ -11,11 +11,18 @@
       <%
          @qdtPonto = Pontocliente.where(clienteempresa_id: clienteempresa).sum(:numr_ponto)
       %>
-      <span style="font-size:20px" class="label label-danger pull-right"><%=@qdtPonto%> Pts</span>
+       <span style="font-size:20px" class="label label-danger pull-right"><%=@qdtPonto%> Pts</span>
       <div class="media-body">
         <h2 class="media-heading"><%=clienteempresa.empresa.nome_empresa%></h2>
-        <span>Teste</span>
-
+        <small style ="font-size:12px;color:#555555">
+          <%=clienteempresa.empresa.endereco.endereco%>
+          <%=clienteempresa.empresa.endereco.cidade.nome_cidade%> -
+          <%=clienteempresa.empresa.endereco.cidade.estado.sigl_estado%>
+        </small>
+         |
+        <%= link_to premios_path, class: "btn btn-success btn-sm" do %>
+               Visitar loja de prêmios <span class="ion ion-trophy"></span>
+        <% end %>
        </div>
       </li>
     </ul>

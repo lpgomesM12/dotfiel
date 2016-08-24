@@ -60,6 +60,7 @@
                 <label>Prêmio</label>
                    <input type="text" class="form-control input-lg" id="premio" name="premio" placeholder="Pesquise pelo Prêmio">
                    <input type="hidden" name="premio_id"  id="premio_id">
+                   <input type="hidden" name="ponto_resgate"  id="ponto_resgate">
          </div>
      </div>
      <hr>
@@ -77,6 +78,28 @@
 </div><!-- /.box -->
 </form>
 </div><!-- /.box-body -->
+
+
+<!-- Modal -->
+<div id="ModalAviso" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-sm">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Aviso</h4>
+      </div>
+      <div class="modal-body">
+        <p>Usuário não tem pontos suficientes para resgatar esse prêmio</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 </section>
 
 <script type="text/javascript">
@@ -132,20 +155,27 @@ $("#Msg").hide("slow");
 
 
  function resgata_ponto(){
+ if ($("#codigo_acomulado").val() >= $("#ponto_resgate").val()){
+   $.ajax({
+     url: '<%= resgatapremio_path %>',
+     data : {
+       premio_id : $("#premio_id").val(),
+       id : $("#clienteempresa").val()
+     },
+     success: function(data){
+          $("#codigo_acomulado").text(data.qtd);
+          $("#ponto_add").text(data.pontoadd)
+          $("#valor").val("");
+          $("#Msg").show("slow")
+     }
+   })
+ }else{
 
-     $.ajax({
-       url: '<%= resgatapremio_path %>',
-       data : {
-         premio_id : $("#premio_id").val(),
-         id : $("#clienteempresa").val()
-       },
-       success: function(data){
-            $("#codigo_acomulado").text(data.qtd);
-            $("#ponto_add").text(data.pontoadd)
-            $("#valor").val("");
-            $("#Msg").show("slow")
-       }
-     })
+   $("#ModalAviso").modal();
+  // alert("Usuário não tem pontos suficientes para resgatar esse prêmio");
+ }
+
+
 
  };
 
@@ -162,6 +192,7 @@ $("#Msg").hide("slow");
    select: function(event, ui) {
        if (ui.item) {
              $("#premio_id").val(ui.item.id);
+             $("#ponto_resgate").val(ui.item.numr_ponto);
           }
         }
     });

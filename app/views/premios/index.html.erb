@@ -35,17 +35,15 @@
                  <td><%= premio.nome_premio %></td>
                  <td><%= premio.numr_ponto %></td>
                  <td align='right'>
-                   <div class="btn-group">
-                       <%= link_to premio, class: "btn btn-default btn-sm" do %>
-                         <span class="glyphicon glyphicon-list-alt text-success"></span> Exibir
+                       <%= link_to premio, class: "btn btn-default btn-sm",  :rel=>"tooltip", :title=>"Ver" do %>
+                         <span class="glyphicon glyphicon-eye-open"></span>
                        <% end %>
-                       <%= link_to edit_premio_path(premio) , class: "btn btn-default btn-sm" do %>
-                         <span class="glyphicon glyphicon-pencil text-primary"></span> Editar
+                       <%= link_to edit_premio_path(premio) , class: "btn btn-default btn-sm", :rel=>"tooltip", :title=>"Editar" do %>
+                         <span class="glyphicon glyphicon-pencil text-primary"></span>
                        <% end %>
-                      <%= link_to premio, method: :delete, data: { confirm: 'Deseja excluir o registro?' }, class: "btn btn-default btn-sm" do %>
-                         <span class="glyphicon glyphicon-trash text-danger"></span> Excluir
+                      <%= link_to premio, method: :delete, data: { confirm: 'Deseja excluir o registro?' }, :rel=>"tooltip", :title=>"Deletar", class: "btn btn-default btn-sm" do %>
+                         <span class="glyphicon glyphicon-trash text-danger"></span>
                        <% end %>
-                   </div>
                    </td>
                </tr>
              <% end %>

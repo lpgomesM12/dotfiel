@@ -24,9 +24,6 @@
           </form>
           <!-- /.search form -->
           <!-- sidebar menu: : style can be found in sidebar.less -->
-
-          <%=current_user.role%>
-
           <ul class="sidebar-menu">
             <li class="header">MENU NAVEGAÇÃO</li>
 
@@ -73,7 +70,7 @@
 
             <%if current_user.role == "USER"%>
 
-              <li class="header">USUÁRIO</li>
+              <!-- <li class="header">USUÁRIO</li> -->
               <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Perfil</span></a></li>
             <%end%>
           </ul>

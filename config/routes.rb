@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'loja/index'
+
   resources :premios
   get 'site/index'
 

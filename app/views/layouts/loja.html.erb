@@ -26,39 +26,6 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
   </head>
 
-  <body class="hold-transition skin-blue layout-top-nav">
-    <div class="wrapper">
+   <%= yield %>
 
-      <header class="main-header">
-        <nav class="navbar navbar-static-top">
-          <div class="container">
-            <div class="navbar-header">
-              <a href="../../index2.html" class="navbar-brand">Loja de Prêmios<b></a>
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-                <i class="fa fa-bars"></i>
-              </button>
-            </div>
-          </div><!-- /.container-fluid -->
-        </nav>
-      </header>
-      <!-- Full Width Column -->
-      <div class="content-wrapper">
-        <div class="container">
-
-          <!-- Main content -->
-          <section class="content">
-               <%= yield %>
-          </section><!-- /.content -->
-        </div><!-- /.container -->
-      </div><!-- /.content-wrapper -->
-      <footer class="main-footer">
-        <div class="container">
-          <div class="pull-right hidden-xs">
-            <!-- <b>Version</b> 2.3.0 -->
-          </div>
-          <strong>Copyright &copy; 2016 </strong>Todos os direitos reservados.
-        </div><!-- /.container -->
-      </footer>
-    </div><!-- ./wrapper -->
-  </body>
 </html>

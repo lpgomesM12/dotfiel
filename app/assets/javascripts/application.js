@@ -30,4 +30,5 @@
 //= require plugins/iCheck/icheck.min
 //= require plugins/datatables/jquery.dataTables.min
 //= require plugins/datatables/dataTables.bootstrap.min
+//= require site/analytics
 //= require morris

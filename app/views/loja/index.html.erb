@@ -1,39 +1,77 @@
-<div class="container">
-    <div class="row">
-    	<div class="col-md-12">
-    <% @premios.each do |premio| %>
-			<div class="col-sm-4 col-md-3">
-				<div class="thumbnail" >
-					<h4 class="text-center"><span class="label label-info">Prêmio</span></h4>
-					<img src="http://placehold.it/650x450&text=Prêmio" class="img-responsive">
-					<div class="caption">
-						<div class="row">
-              <div class="col-md-12 col-xs-12">
-               <h3><%=premio.numr_ponto%> Potos</h3>
-             </div>
-						</div>
-            <div class="row">
-              <div class="col-md-12 col-xs-12">
-                <h5 style="color:#0053a0"><%=premio.nome_premio.at(0..40)%></h5>
-              </div>
-            </div>
-						<p></p>
-						<div class="row">
-							<div class="col-md-6">
-								<a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-thumbs-up"></span> Curtir</a>
-							</div>
-							<div class="col-md-6">
-								<!-- <a href="#" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> Buy</a></div> -->
-						</div>
-						<p> </p>
-					</div>
-				</div>
-			</div>
-    </div>
-    <%end%>
-	</div>
-</div>
+<body class="hold-transition skin-blue layout-top-nav">
+  <div class="wrapper">
 
+    <header class="main-header">
+      <nav class="navbar navbar-static-top">
+        <div class="container">
+          <div class="navbar-header">
+            <a href="../../index2.html" class="navbar-brand"><%=@empresa.nome_empresa%><b></a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+              <i class="fa fa-bars"></i>
+            </button>
+          </div>
+        </div><!-- /.container-fluid -->
+      </nav>
+    </header>
+    <!-- Full Width Column -->
+    <div class="content-wrapper">
+      <div class="container">
+
+        <!-- Main content -->
+        <section class="content">
+          <div class="container">
+              <div class="row">
+              	<div class="col-md-12">
+              <% @premios.each do |premio| %>
+          			<div class="col-sm-4 col-md-3">
+          				<div class="thumbnail" >
+          					<!-- <h4 class="text-center"><span class="label label-info">Prêmio</span></h4> -->
+                    <img src="/assets/premio1.png" class="img-responsive">
+          					<div class="caption">
+          						<div class="row">
+                        <div class="col-md-12 col-xs-12">
+                         <h3><%=premio.numr_ponto%> Potos</h3>
+                       </div>
+          						</div>
+                      <div class="row">
+                        <div class="col-md-12 col-xs-12">
+                          <h5 style="color:#0053a0"><%=premio.nome_premio.at(0..40)%></h5>
+                        </div>
+                      </div>
+          						<p></p>
+          						<div class="row">
+          							<div class="col-md-6">
+          								<a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-thumbs-up"></span> Curtir</a>
+          							</div>
+          							<div class="col-md-6">
+          								<!-- <a href="#" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> Buy</a></div> -->
+          						</div>
+          						<p> </p>
+          					</div>
+          				</div>
+          			</div>
+              </div>
+              <%end%>
+            	</div>
+           </div>
+          </div>
+           <input type="hidden" id="empresa_id" name="name" value="<%=@empresa.id%>">
+        </section><!-- /.content -->
+
+        <input type="button" name="name" value="">
+
+      </div><!-- /.container -->
+    </div><!-- /.content-wrapper -->
+    <footer class="main-footer">
+      <div class="container">
+        <div class="pull-right hidden-xs">
+          <!-- <b>Version</b> 2.3.0 -->
+        </div>
+        <strong>Copyright &copy; 2016 </strong>Todos os direitos reservados.
+      </div><!-- /.container -->
+    </footer>
+  </div><!-- ./wrapper -->
+</body>
 
 <style media="screen">
 .btn-product{

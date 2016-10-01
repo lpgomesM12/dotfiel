@@ -71,7 +71,14 @@
             <%if current_user.role == "USER"%>
 
               <!-- <li class="header">USUÁRIO</li> -->
-              <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Perfil</span></a></li>
+
+              <li>
+                 <%= link_to  edit_user_registration_path do %>
+                      <i class="fa fa-user"></i>
+                       <span>Perfil</span>
+                    <% end %>
+              </li>
+
             <%end%>
           </ul>
         </section>

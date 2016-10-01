@@ -14,13 +14,16 @@ Rails.application.routes.draw do
   resources :estados
   get 'static_pages/home'
   root 'static_pages#home'
-  match '/listarCidade', to: 'cidades#get_cities', via: 'get'
-  match '/buscaCliente', to: 'pessoas#busca_cliente', via: 'get'
   get 'addponto', to: 'pontoclientes#addponto', as: 'addponto'
   get 'resgataponto', to: 'pontoclientes#resgatarponto', as: 'resgatarponto'
+  get 'buscapremio' => 'pontoclientes#buscapremio'
+
+  match '/listarCidade', to: 'cidades#get_cities', via: 'get'
+  match '/buscaCliente', to: 'pessoas#busca_cliente', via: 'get'
   match '/buscaClientePonto', to: 'pontoclientes#busca_cliente', via: 'get'
   match '/addpontocliente', to: 'pontoclientes#add_ponto', via: 'get'
-  get 'buscapremio' => 'pontoclientes#buscapremio'
   match '/resgatapremio', to: 'pontoclientes#resgata_premio', via: 'get'
+  match '/logar', to: 'userapp#login', via: 'get'
+  match '/cadastrarCliente', to: 'userapp#cadastrar_cliente', via: 'get'
   
 end

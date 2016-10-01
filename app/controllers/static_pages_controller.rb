@@ -7,7 +7,7 @@ class StaticPagesController < ApplicationController
 
       @pontosclientes = Pontocliente.where(empresa_id: current_user.empresa_id).page(1).per(4).order("created_at DESC")
 
-      @clienteempresas = Clienteempresa.where(pessoa_id: current_user.empresa_id)
+      @clienteempresas = Clienteempresa.where(pessoa_id: current_user.pessoa_id)
 
     end
   end

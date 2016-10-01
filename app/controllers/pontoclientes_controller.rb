@@ -2,7 +2,6 @@ class PontoclientesController < ApplicationController
   before_action :set_pontocliente, only: [:show, :edit, :update, :destroy]
 
 
-
   def add_ponto
     @valor = params[:valor]
     @valorarray = @valor.split(',')

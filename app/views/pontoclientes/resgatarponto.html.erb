@@ -49,6 +49,8 @@
         <div class="col-lg-4">
           <h4 disabel>Pontos acumulados:</h4>
             <i id="codigo_acomulado"></i> Pts.
+            <input type="hidden" name="ponto_acomulado"  id="ponto_acomulado">
+
         </div>
        <hr>
       </div>
@@ -88,13 +90,13 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Aviso</h4>
+        <h4 class="modal-title">Aviso <i class="glyphicon glyphicon-alert text-danger"></i></h4>
       </div>
       <div class="modal-body">
         <p>Usuário não tem pontos suficientes para resgatar esse prêmio</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
       </div>
     </div>
 
@@ -116,13 +118,13 @@ $("#Msg").hide();
        identificador : $("#identificador").val()
      },
      success: function(data){
-
        for (var i in data) {
          var item = data[i];
           $("#clienteempresa").val(item.id);
           $("#nome_cliente").text(item.nome +" "+ item.sobrenome);
           $("#codigo_cliente").text(item.codigo);
           $("#codigo_acomulado").text(item.qdtPonto);
+          $("#ponto_acomulado").val(item.qdtPonto);
           $("#valor").removeAttr('disabled');
           $("#Div").show("slow")
        };
@@ -145,7 +147,7 @@ $("#Msg").hide();
        },
        success: function(data){
             $("#codigo_acomulado").text(data.qtd);
-            $("#ponto_add").text(data.pontoadd)
+            $("#ponto_add").text(data.pontoadd);
             $("#valor").val("");
             $("#Msg").show("slow")
        }
@@ -155,7 +157,11 @@ $("#Msg").hide();
 
 
  function resgata_ponto(){
- if ($("#codigo_acomulado").val() >= $("#ponto_resgate").val()){
+
+   acomulado = parseInt($("#ponto_acomulado").val());
+   resgate = parseInt($("#ponto_resgate").val());
+
+ if (acomulado >= resgate){
    $.ajax({
      url: '<%= resgatapremio_path %>',
      data : {
@@ -164,7 +170,8 @@ $("#Msg").hide();
      },
      success: function(data){
           $("#codigo_acomulado").text(data.qtd);
-          $("#ponto_add").text(data.pontoadd)
+          $("#ponto_add").text(data.pontoadd);
+          $("#ponto_acomulado").val(data.qdtPonto);
           $("#valor").val("");
           $("#Msg").show("slow")
      }
@@ -174,9 +181,6 @@ $("#Msg").hide();
    $("#ModalAviso").modal();
   // alert("Usuário não tem pontos suficientes para resgatar esse prêmio");
  }
-
-
-
  };
 
  $(document).ready(function() {
@@ -193,6 +197,7 @@ $("#Msg").hide();
        if (ui.item) {
              $("#premio_id").val(ui.item.id);
              $("#ponto_resgate").val(ui.item.numr_ponto);
+            // codigo_acomulado
           }
         }
     });

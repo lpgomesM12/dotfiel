@@ -2,19 +2,43 @@ class PessoasController < ApplicationController
   before_action :set_pessoa, only: [:show, :edit, :update, :destroy]
 
  def busca_cliente
+
+   if params[:empresa_id] != nil
+      @empresa = params[:empresa_id]
+    else
+      @empresa = current_user.empresa_id
+   end
+
    @pessoa = Pessoa.where(cpf: params[:cpf])
+   #quando não tem cadastro
+   @situacao = 0
+
+    unless @pessoa.empty?
+      #quando encontrou a pessoa no banco de dados
+      @situacao = 1
+      @clientefiel = Clienteempresa.where(pessoa_id: @pessoa.first.id, empresa_id: @empresa)
+    unless @clientefiel.empty?
+       #quando encontrou a pessoa no banco de dados e a mesma já é morador do condominio
+       @situacao = 2
+    end
+   end
+
+
    json_pessoa = @pessoa.map { |item| {:id => item.id,
                                          :nome_primeiro => item.nome_primeiro,
                                          :nome_sobrenome =>  item.nome_sobrenome,
                                          :cpf => item.cpf,
-                                         :data_nascimento => item.data_nascimento,
+                                         :data_nascimento => item.data_nascimento.strftime("%d/%m/%Y"),
                                          :email => item.email,
                                          :codigo_cliente => item.codigo_cliente,
                                          :sexo => item.sexo,
                                          :endereco => item.endereco.endereco,
                                          :complemento => item.endereco.complemento,
                                          :estado => item.endereco.cidade.estado.nome_estado,
-                                         :cidade => item.endereco.cidade.nome_cidade}}
+                                         :estado_id => item.endereco.cidade.estado_id,
+                                         :cidade => item.endereco.cidade.nome_cidade,
+                                         :cidade_id => item.endereco.cidade_id,
+                                         :situacao => @situacao}}
    render :json => json_pessoa
  end
   # GET /pessoas

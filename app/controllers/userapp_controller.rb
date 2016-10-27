@@ -20,6 +20,8 @@ class UserappController < ApplicationController
 
   def cadastrar_cliente
     #debugger
+
+ if params[:cliente_id] == nil
     @endereco = Endereco.new
     @endereco.endereco = params[:endereco]
     @endereco.cidade_id = params[:cidade_id]
@@ -55,6 +57,9 @@ class UserappController < ApplicationController
       @empresa = Empresa.find(params[:empresa_id])
       Userinfo.send_email(@user,@empresa.nome_empresa).deliver
     end
+  end
+
+   Clienteempresa.create(:empresa_id => params[:empresa_id], :pessoa_id => params[:cliente_id])
 
     render :json => true
 

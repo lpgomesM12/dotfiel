@@ -119,6 +119,29 @@
 </div>
 </section>
 
+
+<!-- Modal informativo -->
+<div id="myModalInformativo" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-sm">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" id="fechar" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Aviso</h4>
+      </div>
+      <div class="modal-body">
+        <div id='mensagem'>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <% end %>
 
 <script type="text/javascript">
@@ -160,6 +183,14 @@
                 cidade += "<option value='1'>"+item.cidade+"</option>"
                 $('#pessoa_endereco_attributes_cidade_id').html(cidade);
 
+                $("#mensagem").empty();
+                if (item.situacao == 1 ){
+                   $("#mensagem").append("<h5>Encontramos uma pessoa cadastrada em nossa base de dados com esse CPF. Salve para torná-la um cliente fiel.</h5>");
+                 }else if(item.situacao == 2){
+                   $("#mensagem").append("<h5>Esse cliente fiel já está cadastrado.</h5>");
+                 }
+                   chamaModel();
+                 return;
 
               };
             }
@@ -167,6 +198,18 @@
     }
 });
 
+
+$(document).ready(function () {
+   $('input').keypress(function (e) {
+        var code = null;
+        code = (e.keyCode ? e.keyCode : e.which);
+        return (code == 13) ? false : true;
+   });
+});
+
+function chamaModel(){
+   $("#myModalInformativo").modal()
+}
 
 function changeState(state){
     $.ajax({

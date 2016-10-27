@@ -3,6 +3,19 @@ class PontoclientesController < ApplicationController
 
 
   def add_ponto
+
+    if params[:empresa_id] != nil
+       @empresa = params[:empresa_id]
+     else
+       @empresa = current_user.empresa_id
+    end
+
+    if params[:user_id] != ""
+           @user = params[:user_id]
+     else
+           @user = current_user.id
+    end
+
     @valor = params[:valor]
     @valorarray = @valor.split(',')
 
@@ -31,10 +44,10 @@ class PontoclientesController < ApplicationController
      @pontocliente = Pontocliente.new
      @pontocliente.numr_ponto = @valorredondo
      @pontocliente.valor_gasto = params[:valor]
-     @pontocliente.empresa_id = current_user.empresa_id
+     @pontocliente.empresa_id = @empresa
      @pontocliente.clienteempresa_id = params[:id]
      @pontocliente.regraponto_id = 1
-     @pontocliente.user_inclusao = current_user.id
+     @pontocliente.user_inclusao = @user
      @pontocliente.save
 
       @qdtPonto = Pontocliente.where(clienteempresa_id: params[:id]).sum(:numr_ponto)
@@ -44,13 +57,26 @@ class PontoclientesController < ApplicationController
   end
 
   def resgata_premio
+
+      # if params[:empresa_id] != nil
+      #    @empresa = params[:empresa_id]
+      #  else
+      #    @empresa = current_user.empresa_id
+      # end
+
+      if params[:user_id] != ""
+             @user = User.find(params[:user_id])
+       else
+             @user = current_user
+      end
+
       @pontocliente = Pontocliente.new
       @premio = Premio.find(params[:premio_id])
 
       @pontocliente.numr_ponto = (-@premio.numr_ponto)
-      @pontocliente.empresa_id = current_user.empresa_id
+      @pontocliente.empresa_id = @user.empresa_id
       @pontocliente.clienteempresa_id = params[:id]
-      @pontocliente.user_inclusao = current_user.id
+      @pontocliente.user_inclusao = @user.id
       @pontocliente.flag_resgatado = true
       @pontocliente.premio_id = params[:premio_id]
       @pontocliente.save
@@ -61,6 +87,10 @@ class PontoclientesController < ApplicationController
 
   end
 
+
+ def busca_premios
+     @premios = Premio.where()
+ end
 
   def buscapremio
     @premios = Premio.search(params[:term])
@@ -75,17 +105,30 @@ class PontoclientesController < ApplicationController
   end
 
   def busca_cliente
-     clientes = Clienteempresa.busca_cliente(params[:identificador], current_user.empresa_id)
 
-     @qdtPonto = Pontocliente.where(clienteempresa_id: clientes.first.id).sum(:numr_ponto)
+    if params[:empresa_id] != nil
+       @empresa = params[:empresa_id]
+     else
+       @empresa = current_user.empresa_id
+    end
+     @clientes = Clienteempresa.busca_cliente(params[:identificador], @empresa)
 
-    cliente_json = clientes.map { |item| {:id => item.id,
+    if @clientes.empty?
+       return  render :json => false
+     end
+
+    @qdtPonto = Pontocliente.where(clienteempresa_id: @clientes.first.id).sum(:numr_ponto)
+
+    cliente_json = @clientes.map { |item| {:id => item.id,
                                          :nome => item.pessoa.nome_primeiro,
                                          :sobrenome => item.pessoa.nome_sobrenome,
                                          :cpf => item.pessoa.cpf,
                                          :codigo => item.pessoa.codigo_cliente,
                                          :qdtPonto => @qdtPonto}}
+
     render :json => cliente_json
+
+
   end
 
   # GET /pontoclientes

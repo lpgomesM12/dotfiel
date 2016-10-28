@@ -59,9 +59,13 @@ class UserappController < ApplicationController
     end
   end
 
-   Clienteempresa.create(:empresa_id => params[:empresa_id], :pessoa_id => params[:cliente_id])
+    @fiel = Clienteempresa.where(:empresa_id => params[:empresa_id], :pessoa_id => params[:cliente_id])
 
-    render :json => true
+   if @fiel.empty?
+     Clienteempresa.create(:empresa_id => params[:empresa_id], :pessoa_id => params[:cliente_id])
+   end
+
+   render :json => true
 
   end
 end

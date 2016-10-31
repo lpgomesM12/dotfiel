@@ -1,6 +1,32 @@
 class PessoasController < ApplicationController
   before_action :set_pessoa, only: [:show, :edit, :update, :destroy]
 
+
+#Para aplicativo
+def show_cliente
+     @cliente = Clienteempresa.find(params[:cliente_id])
+
+     @qdtPonto = Pontocliente.where(clienteempresa_id: params[:cliente_id]).sum(:numr_ponto)
+
+     json_cliente =   {:id => @cliente.id,
+                            :nome_primeiro => @cliente.pessoa.nome_primeiro,
+                            :nome_sobrenome =>  @cliente.pessoa.nome_sobrenome,
+                            :cpf => @cliente.pessoa.cpf,
+                            :data_nascimento => @cliente.pessoa.data_nascimento.strftime("%d/%m/%Y"),
+                            :email => @cliente.pessoa.email,
+                            :codigo_cliente => @cliente.pessoa.codigo_cliente,
+                            :ponto_acumulado => @qdtPonto,
+                            :sexo => @cliente.pessoa.sexo,
+                            :endereco => @cliente.pessoa.endereco.endereco,
+                            :complemento => @cliente.pessoa.endereco.complemento,
+                            :estado => @cliente.pessoa.endereco.cidade.estado.nome_estado,
+                            :estado_id => @cliente.pessoa.endereco.cidade.estado_id,
+                            :cidade => @cliente.pessoa.endereco.cidade.nome_cidade,
+                            :cidade_id => @cliente.pessoa.endereco.cidade_id}
+
+     render :json => json_cliente
+end
+
  def busca_cliente
 
    if params[:empresa_id] != nil
@@ -28,7 +54,7 @@ class PessoasController < ApplicationController
                                          :nome_primeiro => item.nome_primeiro,
                                          :nome_sobrenome =>  item.nome_sobrenome,
                                          :cpf => item.cpf,
-                                         :data_nascimento => item.data_nascimento.strftime("%d/%m/%Y"),
+                                         :data_nascimento =>  item.data_nascimento,
                                          :email => item.email,
                                          :codigo_cliente => item.codigo_cliente,
                                          :sexo => item.sexo,
@@ -47,6 +73,26 @@ class PessoasController < ApplicationController
     @cliente = Clienteempresa.where(empresa_id: current_user.empresa_id)
   end
 
+  def lista_clientes
+    @clientes = Clienteempresa.where(empresa_id: params[:empresa_id])
+
+    json_clientes = @clientes.map { |item| {:id => item.id,
+                                          :nome_primeiro => item.pessoa.nome_primeiro,
+                                          :nome_sobrenome =>  item.pessoa.nome_sobrenome,
+                                          :cpf => item.pessoa.cpf,
+                                          :data_nascimento => item.pessoa.data_nascimento.strftime("%d/%m/%Y"),
+                                          :email => item.pessoa.email,
+                                          :codigo_cliente => item.pessoa.codigo_cliente,
+                                          :sexo => item.pessoa.sexo,
+                                          :endereco => item.pessoa.endereco.endereco,
+                                          :complemento => item.pessoa.endereco.complemento,
+                                          :estado => item.pessoa.endereco.cidade.estado.nome_estado,
+                                          :estado_id => item.pessoa.endereco.cidade.estado_id,
+                                          :cidade => item.pessoa.endereco.cidade.nome_cidade,
+                                          :cidade_id => item.pessoa.endereco.cidade_id}}
+
+    render :json => json_clientes
+  end
   # GET /pessoas/1
   # GET /pessoas/1.json
   def show

@@ -25,5 +25,7 @@ Rails.application.routes.draw do
   match '/resgatapremio', to: 'pontoclientes#resgata_premio', via: 'get'
   match '/logar', to: 'userapp#login', via: 'get'
   match '/cadastrarCliente', to: 'userapp#cadastrar_cliente', via: 'get'
-  
+  match '/listaclientes', to: 'pessoas#lista_clientes', via: 'get'
+  match '/showcliente', to: 'pessoas#show_cliente', via: 'get'
+
 end

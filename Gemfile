@@ -8,6 +8,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
+gem "paperclip", "~> 5.0.0"
 
 gem 'pg', '~> 0.15'
 gem 'bootstrap-sass', '~> 3.3.6'

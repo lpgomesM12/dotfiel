@@ -4,7 +4,13 @@ class PremiosController < ApplicationController
   # GET /premios
   # GET /premios.json
   def index
-    @premios = Premio.all
+
+    if params[:empresa_id] != nil
+        @empresa = params[:empresa_id]
+      else
+        @empresa = current_user.empresa_id
+    end
+    @premios = Premio.where(empresa_id: @empresa)
   end
 
   # GET /premios/1

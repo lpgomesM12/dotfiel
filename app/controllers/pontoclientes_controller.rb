@@ -3,7 +3,6 @@ class PontoclientesController < ApplicationController
 
 
   def add_ponto
-
     if params[:empresa_id] != nil
        @empresa = params[:empresa_id]
      else

@@ -1,6 +1,34 @@
 class EmpresasController < ApplicationController
   before_action :set_empresa, only: [:show, :edit, :update, :destroy]
 
+ def lista_empresas
+    empresas = Empresa.all
+
+    user = User.find(params[:user_id])
+
+    empresas_json = empresas.map {|item| {:id => item.id,
+                                          :nome_empresa => item.nome_empresa,
+                                          :endereco => item.endereco.endereco,
+                                          :cidade => item.endereco.cidade.nome_cidade,
+                                          :sigl_estado => item.endereco.cidade.estado.sigl_estado,
+                                          :clientefiel => cliente_fiel(item.id,user.pessoa_id),
+                                          :logo => item.logo.url(:medium)}}
+    render :json => empresas_json
+ end
+
+
+ def cliente_fiel(empresa, pessoa)
+
+     @clienteempresa = Clienteempresa.where(empresa_id: empresa, pessoa_id: pessoa)
+
+     if @clienteempresa.empty?
+        return false
+      else
+        return true
+     end
+
+ end
+
   # GET /empresas
   # GET /empresas.json
   def index
@@ -70,6 +98,6 @@ class EmpresasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def empresa_params
-      params.require(:empresa).permit(:nome_empresa, :cnpj, :nome_responsavel, :desc_telefone, :endereco_id, endereco_attributes: [:id, :endereco, :complemento, :desc_cep, :cidade_id])
+      params.require(:empresa).permit(:nome_empresa, :cnpj, :nome_responsavel, :desc_telefone, :endereco_id, :logo, endereco_attributes: [:id, :endereco, :complemento, :desc_cep, :cidade_id])
     end
 end
